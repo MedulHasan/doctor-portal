@@ -57,10 +57,10 @@ const Testimonial = () => {
                                             image={c.img}
                                             alt="Paella dish"
                                         />
-                                        <div>
+                                        <Box>
                                             <Typography variant="h5" sx={{ fontSize: '18px', fontWeight: '600', color: '#5EC7C7' }}>{c.name}</Typography>
                                             <Typography variant="h6" sx={{ fontSize: '12px', fontWeight: '400' }}>{c.city}</Typography>
-                                        </div>
+                                        </Box>
                                     </Box>
                                 </Paper>
                             </Grid>

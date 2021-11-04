@@ -4,6 +4,7 @@ import Navigation from '../../Shared/Navigation/Navigation';
 import AppointmentBanner from '../AppointmentBanner/AppointmentBanner';
 import Banner from '../Banner/Banner';
 import Blog from '../Blog/Blog';
+import Contact from '../Contact/Contact';
 import Information from '../Information/Information';
 import Services from '../Services/Services';
 import Testimonial from '../Testimonial/Testimonial';
@@ -21,6 +22,7 @@ const Home = () => {
                 <AppointmentBanner />
                 <Testimonial />
                 <Blog />
+                <Contact />
             </Container>
         </>
     );

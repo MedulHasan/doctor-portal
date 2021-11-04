@@ -1,0 +1,26 @@
+[
+    {
+        "id": 1,
+        "name": "Rashed Kabir",
+        "img": "https://i.ibb.co/wgNmSsg/people-1.png",
+        "date": "22 Aug 2021",
+        "title": "Check at least a doctor in a year for tour teeth",
+        "body": "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Culpa libero nisi explicabo corrupti. Vel magni impedit beatae, iure numquam necessitatibus?"
+    },
+    {
+        "id": 2,
+        "name": "Dr. Caudi",
+        "img": "https://i.ibb.co/Vtj35qX/people-3.png",
+        "date": "23 April 2019",
+        "title": "2 times of brush in a day can keep you healthy",
+        "body": "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Culpa libero nisi explicabo corrupti. Vel magni impedit beatae, iure numquam necessitatibus?"
+    },
+    {
+        "id": 3,
+        "name": "Dr. John Mitchel",
+        "img": "https://i.ibb.co/S0HgkfB/people-2.png",
+        "date": "23 April 2021",
+        "title": "The tooth cancer is taking a challenge",
+        "body": "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Culpa libero nisi explicabo corrupti. Vel magni impedit beatae, iure numquam necessitatibus?"
+    }
+]
