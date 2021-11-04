@@ -1,0 +1,23 @@
+[
+    {
+        "id": 1,
+        "name": "Winson Herry",
+        "img": "https://i.ibb.co/wgNmSsg/people-1.png",
+        "city": "California",
+        "body": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora in ratione quaerat dolorum quibusdam provident accusantium, odit aperiam, aliquam tenetur, distinctio repudiandae. Asperiores ratione amet, repudiandae at quos quibusdam quae."
+    },
+    {
+        "id": 2,
+        "name": "Winson Herry",
+        "img": "https://i.ibb.co/Vtj35qX/people-3.png",
+        "city": "California",
+        "body": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora in ratione quaerat dolorum quibusdam provident accusantium, odit aperiam, aliquam tenetur, distinctio repudiandae. Asperiores ratione amet, repudiandae at quos quibusdam quae."
+    },
+    {
+        "id": 3,
+        "name": "Winson Herry",
+        "img": "https://i.ibb.co/S0HgkfB/people-2.png",
+        "city": "California",
+        "body": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora in ratione quaerat dolorum quibusdam provident accusantium, odit aperiam, aliquam tenetur, distinctio repudiandae. Asperiores ratione amet, repudiandae at quos quibusdam quae."
+    }
+]
