@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Grid, Typography } from '@mui/material';
+import { Box, Grid, Typography } from '@mui/material';
 import Booking from '../Booking/Booking';
 
 const bookings = [
@@ -44,14 +44,14 @@ const bookings = [
 const AvailableAppointment = ({ date }) => {
 
     return (
-        <Container sx={{ my: 5 }}>
+        <Box sx={{ my: 5 }}>
             <Typography sx={{ fontSize: '36px' }}>Available Appointment on {date.toDateString()}</Typography>
             <Grid container spacing={2} sx={{ mt: 3 }}>
                 {
                     bookings.map(booking => <Booking key={booking.id} booking={booking} date={date} />)
                 }
             </Grid>
-        </Container >
+        </Box>
     );
 };
 
