@@ -1,5 +1,6 @@
-import React from 'react';
-import { Box, Grid, Typography } from '@mui/material';
+import React, { useState } from 'react';
+import CloseIcon from '@mui/icons-material/Close';
+import { Alert, Box, Grid, IconButton, Typography } from '@mui/material';
 import Booking from '../Booking/Booking';
 
 const bookings = [
@@ -42,13 +43,37 @@ const bookings = [
 ]
 
 const AvailableAppointment = ({ date }) => {
+    const [appointmentBooking, setAppointmentBooking] = useState(false);
 
     return (
         <Box sx={{ my: 5 }}>
             <Typography sx={{ fontSize: '36px' }}>Available Appointment on {date.toDateString()}</Typography>
+            {
+                appointmentBooking &&
+                <Alert
+                    severity="success"
+                    sx={{ mt: 1 }}
+                >
+                    <Typography>Appointment Booking Successfully!</Typography>
+                    <IconButton
+                        aria-label="close"
+                        onClick={() => setAppointmentBooking(false)}
+                        sx={{
+                            position: 'absolute',
+                            right: 20,
+                            bottom: -10,
+                            // top: 20,
+                            mr: 3,
+                            mt: 1
+                        }}
+                    >
+                        <CloseIcon />
+                    </IconButton>
+                </Alert>
+            }
             <Grid container spacing={2} sx={{ mt: 3 }}>
                 {
-                    bookings.map(booking => <Booking key={booking.id} booking={booking} date={date} />)
+                    bookings.map(booking => <Booking key={booking.id} booking={booking} date={date} setAppointmentBooking={setAppointmentBooking} />)
                 }
             </Grid>
         </Box>

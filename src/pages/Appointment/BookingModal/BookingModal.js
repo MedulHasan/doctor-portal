@@ -1,6 +1,8 @@
 import { Button, Modal, TextField, Typography } from '@mui/material';
 import { Box } from '@mui/system';
-import React from 'react';
+import React, { useState } from 'react';
+
+import useAuth from '../../../hooks/useAuth';
 
 const style = {
     position: 'absolute',
@@ -15,12 +17,44 @@ const style = {
     p: 4,
 };
 
-const BookingModal = ({ openAppointment, handleCloseAppointmentModal, booking, date }) => {
+const BookingModal = ({ openAppointment, handleCloseAppointmentModal, booking, date, setAppointmentBooking }) => {
     const { name, time } = booking;
-    const handleAppointmentForm = (e) => {
+    const { user } = useAuth();
+    const initialInfo = { patientName: user.displayName, email: user.email, phone: '' }
+    const [appointment, setAppointment] = useState(initialInfo)
+
+    const handleOnBlur = (e) => {
+        const newAppointment = { ...appointment };
+        newAppointment[e.target.name] = e.target.value;
+        setAppointment(newAppointment);
+    };
+
+    const handleSubmit = (e) => {
+        const appointmentInfo = {
+            ...appointment,
+            time,
+            serviceName: name,
+            date: date.toLocaleDateString()
+        };
+
+        fetch('http://localhost:8888/appointment', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(appointmentInfo)
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.insertedId) {
+                    setAppointmentBooking(true);
+                    handleCloseAppointmentModal();
+                }
+            })
+
         e.preventDefault();
-        handleCloseAppointmentModal();
-    }
+    };
+
     return (
         <Modal
             open={openAppointment}
@@ -32,13 +66,50 @@ const BookingModal = ({ openAppointment, handleCloseAppointmentModal, booking, d
                 <Typography sx={{ mb: 3, textAlign: 'center' }} id="modal-modal-title" variant="h6" component="h2">
                     {name}
                 </Typography>
-                <form>
-                    <TextField sx={{ width: '90%', mb: 2 }} label="Your Name" variant="outlined" size="small" />
-                    <TextField sx={{ width: '90%', mb: 2 }} label="Your Email" variant="outlined" size="small" />
-                    <TextField sx={{ width: '90%', mb: 2 }} label="Phone No." variant="outlined" size="small" />
-                    <TextField sx={{ width: '90%', mb: 2 }} label="Time" defaultValue={time} disabled variant="outlined" size="small" />
-                    <TextField sx={{ width: '90%', mb: 2 }} label="Date" defaultValue={date.toDateString()} disabled variant="outlined" size="small" />
-                    <Button onClick={handleAppointmentForm} type="submit" sx={{ mt: 3, background: '#14D1CC', ml: 'auto' }} variant="contained">BOOK APPOINTMENT</Button>
+                <form onSubmit={handleSubmit}>
+                    <TextField
+                        sx={{ width: '90%', mb: 2 }}
+                        label="Patient Name"
+                        defaultValue={user.displayName}
+                        variant="outlined"
+                        size="small"
+                        name="patientName"
+                        onBlur={handleOnBlur}
+                    />
+                    <TextField
+                        sx={{ width: '90%', mb: 2 }}
+                        label="Email"
+                        defaultValue={user.email}
+                        variant="outlined"
+                        size="small"
+                        name="email"
+                        onBlur={handleOnBlur}
+                    />
+                    <TextField
+                        sx={{ width: '90%', mb: 2 }}
+                        label="Phone No."
+                        variant="outlined"
+                        size="small"
+                        name="phone"
+                        onBlur={handleOnBlur}
+                    />
+                    <TextField
+                        sx={{ width: '90%', mb: 2 }}
+                        label="Time"
+                        defaultValue={time}
+                        disabled variant="outlined"
+                        size="small"
+                        onBlur={handleOnBlur}
+                    />
+                    <TextField
+                        sx={{ width: '90%', mb: 2 }}
+                        label="Date"
+                        defaultValue={date.toDateString()}
+                        disabled variant="outlined"
+                        size="small"
+                        onBlur={handleOnBlur}
+                    />
+                    <Button type="submit" sx={{ mt: 3, background: '#14D1CC', ml: 'auto' }} variant="contained">BOOK APPOINTMENT</Button>
                 </form>
             </Box>
         </Modal >

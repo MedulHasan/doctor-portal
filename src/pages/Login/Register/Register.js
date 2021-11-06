@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import CloseIcon from '@mui/icons-material/Close';
 import { Container, Grid, Typography, TextField, Button, CircularProgress, Alert } from '@mui/material';
 import login from '../../../images/login.png';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import useAuth from '../../../hooks/useAuth';
 
 const Register = () => {
+    const history = useHistory()
     const { user, registerUser, isLoading, authError } = useAuth();
     const [loginData, setLoginData] = useState({});
     const handleOnChange = (e) => {
@@ -16,11 +17,11 @@ const Register = () => {
     const handleLogin = (e) => {
         e.preventDefault();
 
-        registerUser(loginData.email, loginData.password);
+        registerUser(loginData.email, loginData.password, loginData.name, history);
     }
     return (
         <Container maxWidth="xl" sx={{ mt: 2 }}>
-            {authError &&
+            {/* {authError &&
                 <Alert
                     severity="error"
                     style={{
@@ -28,9 +29,9 @@ const Register = () => {
                     }}
                 >
                     <Typography>User Register Failed</Typography>
-                    {/* <CloseIcon /> */}
+                    <CloseIcon />
                 </Alert>}
-            {user.email && <Alert severity="success">User Register Successfully</Alert>}
+            {user.email && <Alert severity="success">User Register Successfully</Alert>} */}
             <Grid container spacing={3}>
                 <Grid item xs={12} md={6} sx={{ mt: 12 }}>
                     <Typography variant="button" display="block" gutterBottom>
