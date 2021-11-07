@@ -7,8 +7,8 @@ import AvailableAppointment from '../AvaileableAppointment/AvaileableAppointment
 
 const Appointment = () => {
     const [date, setDate] = React.useState(new Date());
-    // const { isLoading } = useAuth();
-    // if (isLoading) { return <CircularProgress /> }
+    const { isLoading } = useAuth();
+    if (isLoading) { return <CircularProgress /> }
     return (
         <div>
             <Navigation />

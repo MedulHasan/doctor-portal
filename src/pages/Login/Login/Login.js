@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
-import CloseIcon from '@mui/icons-material/Close';
-import { Box, Container, Grid, Typography, TextField, Button, Alert, IconButton, CircularProgress } from '@mui/material';
+import { Box, Container, Grid, Typography, TextField, Button, CircularProgress } from '@mui/material';
 import login from '../../../images/login.png';
 import { NavLink, useLocation, useHistory } from 'react-router-dom';
 import useAuth from '../../../hooks/useAuth';
+import { useAlert } from '../../../context/AlertMessage';
 
 const Login = () => {
     const location = useLocation();
     const history = useHistory();
     const [loginData, setLoginData] = useState({});
-    const { user, loginUser, isLoading, authError, signInWithGoogle } = useAuth();
+    const { loginUser, isLoading, authError, signInWithGoogle } = useAuth();
     const [error, setError] = useState({});
+    const { setAlertSuccessMessage } = useAlert();
 
     const handleOnChange = (e) => {
         let newData = { ...loginData };
@@ -37,35 +38,16 @@ const Login = () => {
         }
         e.preventDefault();
         loginUser(loginData.email, loginData.password, location, history);
+        setAlertSuccessMessage(true);
     };
 
     const handleGoogleLogin = () => {
         signInWithGoogle(location, history);
+        setAlertSuccessMessage(true);
     }
 
     return (
         <Container maxWidth="xl">
-            {/* {authError &&
-                <Alert
-                    severity="error"
-                    sx={{ mt: 1 }}
-                >
-                    <Typography>User Login Failed</Typography>
-                    <IconButton
-                        aria-label="close"
-                        onClick={() => setAuthError(false)}
-                        sx={{
-                            position: 'absolute',
-                            right: 8,
-                            top: 8,
-                            mr: 3,
-                            mt: 1
-                        }}
-                    >
-                        <CloseIcon />
-                    </IconButton>
-                </Alert>}
-            {user.email && <Alert severity="success">User Login Successfully</Alert>} */}
             <Grid container spacing={3}>
                 <Grid item xs={12} md={6} sx={{ mt: 12 }}>
                     <Typography variant="button" display="block" gutterBottom>

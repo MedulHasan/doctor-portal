@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
-import CloseIcon from '@mui/icons-material/Close';
-import { Container, Grid, Typography, TextField, Button, CircularProgress, Alert } from '@mui/material';
+import { Container, Grid, Typography, TextField, Button, CircularProgress } from '@mui/material';
 import login from '../../../images/login.png';
 import { NavLink, useHistory } from 'react-router-dom';
 import useAuth from '../../../hooks/useAuth';
+import { useAlert } from '../../../context/AlertMessage';
 
 const Register = () => {
     const history = useHistory()
-    const { user, registerUser, isLoading, authError } = useAuth();
+    const { registerUser, isLoading } = useAuth();
     const [loginData, setLoginData] = useState({});
+    const { setAlertSuccessMessage } = useAlert();
+
     const handleOnChange = (e) => {
         let newData = { ...loginData };
         newData[e.target.name] = e.target.value;
@@ -18,20 +20,10 @@ const Register = () => {
         e.preventDefault();
 
         registerUser(loginData.email, loginData.password, loginData.name, history);
+        setAlertSuccessMessage(true);
     }
     return (
         <Container maxWidth="xl" sx={{ mt: 2 }}>
-            {/* {authError &&
-                <Alert
-                    severity="error"
-                    style={{
-                        display: 'flex',
-                    }}
-                >
-                    <Typography>User Register Failed</Typography>
-                    <CloseIcon />
-                </Alert>}
-            {user.email && <Alert severity="success">User Register Successfully</Alert>} */}
             <Grid container spacing={3}>
                 <Grid item xs={12} md={6} sx={{ mt: 12 }}>
                     <Typography variant="button" display="block" gutterBottom>

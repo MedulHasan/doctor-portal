@@ -1,10 +1,12 @@
 import React from 'react';
 import Grid from '@mui/material/Grid';
-import { Button, Container, Typography } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
+import { Alert, Button, Container, IconButton, Typography } from '@mui/material';
 
 import chair from '../../../images/chair.png';
 import bgimg from '../../../images//bg.png';
 import { Box } from '@mui/system';
+import { useAlert } from '../../../context/AlertMessage';
 
 const bannerText = {
     display: 'flex',
@@ -25,8 +27,30 @@ const bg = {
 }
 
 const Banner = () => {
+    const { alertSuccessMessage,
+        setAlertSuccessMessage } = useAlert();
     return (
         <Box sx={{ margin: '0 60px' }} style={bg}>
+            {alertSuccessMessage &&
+                <Alert
+                    severity="success"
+                    style={{ marginTop: '-50px', marginBottom: '20px' }}
+                >
+                    <Typography>User Login Successfully!</Typography>
+                    <IconButton
+                        aria-label="close"
+                        onClick={() => setAlertSuccessMessage(false)}
+                        sx={{
+                            position: 'absolute',
+                            right: 100,
+                            top: 78,
+                            mr: 1,
+                            mt: 1
+                        }}
+                    >
+                        <CloseIcon />
+                    </IconButton>
+                </Alert>}
             <Grid container spacing={20}>
                 <Grid item xs={12} md={6} style={bannerText} >
                     <Typography variant="h3">

@@ -1,5 +1,6 @@
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import './App.css';
+import AlertMessage from './context/AlertMessage';
 import AuthProvider from './context/AuthProvider';
 import Appointment from './pages/Appointment/Appointment/Appointment';
 import Dashboard from './pages/Dashboard/Dashboard/Dashboard';
@@ -12,28 +13,30 @@ function App() {
   return (
     <div className="App">
       <AuthProvider>
-        <BrowserRouter>
-          <Switch>
-            <Route exact path="/">
-              <Home />
-            </Route>
-            <Route exact path="/home">
-              <Home />
-            </Route>
-            <PrivateRoute exact path="/appointment">
-              <Appointment />
-            </PrivateRoute>
-            <PrivateRoute exact path="/dashboard">
-              <Dashboard />
-            </PrivateRoute>
-            <Route exact path="/login">
-              <Login />
-            </Route>
-            <Route exact path="/register">
-              <Register />
-            </Route>
-          </Switch>
-        </BrowserRouter>
+        <AlertMessage>
+          <BrowserRouter>
+            <Switch>
+              <Route exact path="/">
+                <Home />
+              </Route>
+              <Route exact path="/home">
+                <Home />
+              </Route>
+              <PrivateRoute exact path="/appointment">
+                <Appointment />
+              </PrivateRoute>
+              <PrivateRoute exact path="/dashboard">
+                <Dashboard />
+              </PrivateRoute>
+              <Route exact path="/login">
+                <Login />
+              </Route>
+              <Route exact path="/register">
+                <Register />
+              </Route>
+            </Switch>
+          </BrowserRouter>
+        </AlertMessage>
       </AuthProvider>
     </div>
   );
