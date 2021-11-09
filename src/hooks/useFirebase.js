@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, updateProfile, signOut } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, updateProfile, getIdToken, signOut } from "firebase/auth";
 import initializationAuthentication from "../firebase/firebase.init";
 
 initializationAuthentication();
@@ -8,6 +8,8 @@ initializationAuthentication();
 const useFirebase = () => {
     const [user, setUser] = useState({});
     const [isLoading, setIsLoading] = useState(true);
+    const [admin, setAdmin] = useState(false);
+    const [token, setToken] = useState('');
     const [authError, setAuthError] = useState('');
     const auth = getAuth();
     const googleProvider = new GoogleAuthProvider();
@@ -70,7 +72,11 @@ const useFirebase = () => {
         // setIsLoading(true)
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {
-                setUser(user)
+                setUser(user);
+                getIdToken(user)
+                    .then((idToken) => {
+                        setToken(idToken);
+                    })
             } else {
                 setUser({})
             }
@@ -78,6 +84,12 @@ const useFirebase = () => {
         });
         return () => unsubscribe;
     }, [])
+
+    useEffect(() => {
+        fetch(`https://doctor-portal-medul.herokuapp.com/users/${user.email}`)
+            .then(res => res.json())
+            .then(data => setAdmin(data.admin))
+    }, [user.email])
 
     const logout = () => {
         signOut(auth).then(() => {
@@ -88,7 +100,7 @@ const useFirebase = () => {
     };
 
     const saveUserDB = (email, displayName, method) => {
-        fetch('http://localhost:8888/users', {
+        fetch('https://doctor-portal-medul.herokuapp.com/users', {
             method: method,
             headers: {
                 'content-type': 'application/json'
@@ -101,6 +113,8 @@ const useFirebase = () => {
 
     return {
         user,
+        admin,
+        token,
         registerUser,
         loginUser,
         logout,

@@ -37,7 +37,7 @@ const BookingModal = ({ openAppointment, handleCloseAppointmentModal, booking, d
             date: date.toLocaleDateString()
         };
 
-        fetch('http://localhost:8888/appointment', {
+        fetch('https://doctor-portal-medul.herokuapp.com/appointment', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'

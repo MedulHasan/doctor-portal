@@ -8,17 +8,20 @@ import MenuIcon from '@mui/icons-material/Menu';
 import DashboardCustomizeIcon from '@mui/icons-material/DashboardCustomize';
 import HomeIcon from '@mui/icons-material/Home';
 import { Button } from '@mui/material';
+import { AiFillDashboard } from 'react-icons/ai';
+import { RiAdminFill } from 'react-icons/ri';
+import { FaHospitalUser } from 'react-icons/fa';
 import useAuth from '../../../hooks/useAuth';
 import {
     Switch,
     Route,
     Link,
-    useParams,
     useRouteMatch
 } from "react-router-dom";
 import DashboardHome from '../DashboardHome/DashboardHome';
 import MakeAdmin from '../MakeAdmin/MakeAdmin';
 import AddDoctor from '../AddDoctor/AddDoctor';
+import AdminRoute from '../../Login/PrivateRoute/AdminRoute';
 
 const drawerWidth = 240;
 
@@ -27,7 +30,7 @@ function Dashboard(props) {
     const [mobileOpen, setMobileOpen] = React.useState(false);
     const [appointments, setAppointments] = React.useState([]);
     const [date, setDate] = React.useState(new Date());
-    const { user } = useAuth();
+    const { user, admin, token } = useAuth();
     let { path, url } = useRouteMatch();
 
     const handleDrawerToggle = () => {
@@ -35,13 +38,17 @@ function Dashboard(props) {
     };
 
     React.useEffect(() => {
-        const url1 = `http://localhost:8888/appointment?email=${user.email}&date=${date.toLocaleDateString()}`;
-        fetch(url1)
+        const url1 = `https://doctor-portal-medul.herokuapp.com/appointment?email=${user.email}&date=${date.toLocaleDateString()}`;
+        fetch(url1, {
+            headers: {
+                'authorization': `Bearer ${token}`
+            }
+        })
             .then(res => res.json())
             .then(data => {
                 setAppointments(data)
             })
-    }, [date])
+    }, [date, user.email, token])
 
     const drawer = (
         <Box
@@ -80,32 +87,35 @@ function Dashboard(props) {
                     alignItems: 'center'
                 }}>
                     <ListItem button>
-                        <DashboardCustomizeIcon />
+                        <AiFillDashboard style={{ fontSize: '25px' }} />
                         <Button sx={{ color: '#fff' }}>Dashboard</Button>
                     </ListItem>
                 </Link>
-                <Link id="RouterNavLink" to={`${url}/makeAdmin`} style={{
-                    color: '#fff',
-                    textDecoration: 'none',
-                    display: 'flex',
-                    alignItems: 'center'
-                }}>
-                    <ListItem button>
-                        <DashboardCustomizeIcon />
-                        <Button sx={{ color: '#fff' }}>Make Admin</Button>
-                    </ListItem>
-                </Link>
-                <Link id="RouterNavLink" to={`${url}/addDoctor`} style={{
-                    color: '#fff',
-                    textDecoration: 'none',
-                    display: 'flex',
-                    alignItems: 'center'
-                }}>
-                    <ListItem button>
-                        <DashboardCustomizeIcon />
-                        <Button sx={{ color: '#fff' }}>Add Doctor</Button>
-                    </ListItem>
-                </Link>
+                {admin &&
+                    <Box>
+                        <Link id="RouterNavLink" to={`${url}/makeAdmin`} style={{
+                            color: '#fff',
+                            textDecoration: 'none',
+                            display: 'flex',
+                            alignItems: 'center'
+                        }}>
+                            <ListItem button>
+                                <RiAdminFill style={{ fontSize: '25px' }} />
+                                <Button sx={{ color: '#fff' }}>Make Admin</Button>
+                            </ListItem>
+                        </Link>
+                        <Link id="RouterNavLink" to={`${url}/addDoctor`} style={{
+                            color: '#fff',
+                            textDecoration: 'none',
+                            display: 'flex',
+                            alignItems: 'center'
+                        }}>
+                            <ListItem button>
+                                <FaHospitalUser style={{ fontSize: '25px' }} />
+                                <Button sx={{ color: '#fff' }}>Add Doctor</Button>
+                            </ListItem>
+                        </Link>
+                    </Box>}
             </List>
         </Box>
     );
@@ -161,12 +171,12 @@ function Dashboard(props) {
                     <Route exact path={path}>
                         <DashboardHome date={date} setDate={setDate} appointments={appointments} />
                     </Route>
-                    <Route path={`${path}/makeAdmin`}>
+                    <AdminRoute path={`${path}/makeAdmin`}>
                         <MakeAdmin />
-                    </Route>
-                    <Route path={`${path}/addDoctor`}>
+                    </AdminRoute>
+                    <AdminRoute path={`${path}/addDoctor`}>
                         <AddDoctor />
-                    </Route>
+                    </AdminRoute>
                 </Switch>
             </Box>
         </Box>
