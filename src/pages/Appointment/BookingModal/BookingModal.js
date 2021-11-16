@@ -18,7 +18,7 @@ const style = {
 };
 
 const BookingModal = ({ openAppointment, handleCloseAppointmentModal, booking, date, setAppointmentBooking }) => {
-    const { name, time } = booking;
+    const { name, time, price } = booking;
     const { user } = useAuth();
     const initialInfo = { patientName: user.displayName, email: user.email, phone: '' }
     const [appointment, setAppointment] = useState(initialInfo)
@@ -33,6 +33,7 @@ const BookingModal = ({ openAppointment, handleCloseAppointmentModal, booking, d
         const appointmentInfo = {
             ...appointment,
             time,
+            price,
             serviceName: name,
             date: date.toLocaleDateString()
         };

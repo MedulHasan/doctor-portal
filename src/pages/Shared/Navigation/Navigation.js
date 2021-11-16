@@ -38,11 +38,11 @@ const Navigation = () => {
                         <Link to="/appointment" style={navigationBar}><Button color="inherit" >Appointment</Button></Link>
                         {
                             user.email ? (
-                                <NavLink to="/" style={navigationBar}>
+                                <div style={navigationBar}>
                                     <Link to="/dashboard" style={navigationBar}><Button color="inherit" >Dashboard</Button></Link>
                                     <Button onClick={logout} style={navigationBar} color="inherit">Logout</Button>
                                     <Button style={navigationBar} color="inherit">{user.displayName}</Button>
-                                </NavLink>
+                                </div>
                             ) : (
                                 <NavLink to="/login" style={navigationBar}>
                                     <Button color="inherit">Login</Button>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Box, Typography, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import {Link} from 'react-router-dom';
 
 const AppointmentSchedule = ({ appointments, date }) => {
     return (
@@ -36,7 +37,11 @@ const AppointmentSchedule = ({ appointments, date }) => {
                                     </TableCell>
                                     <TableCell>{appointment.time}</TableCell>
                                     <TableCell>{appointment.serviceName}</TableCell>
-                                    <TableCell>Not Visited</TableCell>
+                                    <TableCell>
+                                        {
+                                            appointment.payment ? 'Paid' : <Link to={`/dashboard/payment/${appointment._id}`}><button>Pay</button></Link>
+                                        }
+                                    </TableCell>
                                 </TableRow>
                             )
                         }

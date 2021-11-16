@@ -6,7 +6,7 @@ const Booking = ({ booking, date, setAppointmentBooking }) => {
     const [openAppointment, setOpenAppointment] = React.useState(false);
     const handleOpenAppointmentModal = () => setOpenAppointment(true);
     const handleCloseAppointmentModal = () => setOpenAppointment(false);
-    const { name, time, space } = booking;
+    const { name, time, space, price } = booking;
     return (
         <>
             <Grid item xs={12} sm={6} md={4}>
@@ -16,6 +16,9 @@ const Booking = ({ booking, date, setAppointmentBooking }) => {
                     </Typography>
                     <Typography variant="h5" sx={{ fontSize: '20px' }}>
                         {time}
+                    </Typography>
+                    <Typography sx={{ color: 'GrayText', my: 1 }}>
+                        Doctor visit: $ {price}
                     </Typography>
                     <Typography sx={{ color: 'GrayText' }}>
                         {space} Space Available
